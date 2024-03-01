@@ -118,7 +118,4 @@ class World:
       
 
 world = World()
-world.RunWorld()
-        
-        
-        
+world.RunWorld()               
