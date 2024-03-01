@@ -33,8 +33,8 @@ class Stack:
 
   def display(self):
     print("----------")
-    for i in range(len(self.stack)):
-      print(f"| {self.stack[len(self.stack) - i - 1]} |")
+    for i in range(self.top + 1):
+      print(f"| {self.stack[self.top - i]} |")
     print("----------")
     
   def reverse(self):

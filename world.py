@@ -45,13 +45,14 @@ class World:
         v_list = []
         while not self.stack.isEmpty():
             currentNode = self.stack.pop()
-            self.stack.display()
             
             row, col = currentNode.position
             d = currentNode.direction
-            print(row, col, d)
             currentNode.direction += 1
+            
             self.stack.push(currentNode)
+            self.stack.display()
+            print(row, col, d, v_list)
             
             if MAP[row][col] == "E":
                 for node in self.stack.stack:
@@ -60,6 +61,7 @@ class World:
                 return True
             
             if d == 0:
+                print("found", getNextCell(row - 1, col))
                 if self.getNextCell(row - 1, col) and (row - 1, col) not in v_list:
                     self.stack.push(PositionNode(row - 1, col))
                     v_list.append((row, col))
@@ -91,7 +93,8 @@ class World:
             nextCell = MAP[row][col]
             if nextCell != "#": return True
         except:
-            print("Error")                    
+            print("Error")      
+        return False
                 
                 
                 
@@ -115,7 +118,6 @@ class World:
                 self.window.DrawPlayer(y + 25, x - 25)
                 time.sleep(0.1)
       
-    
 
 world = World()
 world.RunWorld()
