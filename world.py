@@ -20,7 +20,7 @@ class World:
         
     def BuildMaze(self):
         x = y =0
-        for row in range( len(GRID ) ):
+        for row in range(len(GRID)):
             for col in range( len(GRID[row])):
                 grid_mark = GRID[row][col]
                 x = LEFT + ( col * 25)
@@ -45,17 +45,20 @@ class World:
         v_list = []
         while not self.stack.isEmpty():
             currentNode = self.stack.pop()
+            self.stack.display()
             
-            row, col = currentNode.position()
+            row, col = currentNode.position
             d = currentNode.direction
-            currentNode.direcion += 1
+            print(row, col, d)
+            currentNode.direction += 1
             self.stack.push(currentNode)
             
-            if MAP[row][colum] == "E":
+            if MAP[row][col] == "E":
                 for node in self.stack.stack:
                     x, y = node.position
                     map[x][y] = "P"
                 return True
+            
             if d == 0:
                 if self.getNextCell(row - 1, col) and (row - 1, col) not in v_list:
                     self.stack.push(PositionNode(row - 1, col))
@@ -71,7 +74,7 @@ class World:
                     self.stack.push(PositionNode(row + 1, col))
                     v_list.append((row, col))
             
-            if d == 2:
+            if d == 3:
                 if self.getNextCell(row, col + 1) and (row, col + 1) not in v_list:
                     self.stack.push(PositionNode(row, col + 1))
                     v_list.append((row, col))
@@ -99,7 +102,7 @@ class World:
         if self.FindPath():
             self.stack.reverse_stack()
             
-        # game loop
+
         while True:
             self.window.screen.update()
            
