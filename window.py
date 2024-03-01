@@ -4,7 +4,7 @@ class Window:
     def __init__(self, width, height):
         self.screen = turtle.Screen()
         self.screen.title("Maze Solved using a Stack")
-        self.screen.bgcolor("#AAFFAA")
+        self.screen.bgcolor("#008080")
         self.screen.setup(width, height)
         self.screen.tracer(0)
         

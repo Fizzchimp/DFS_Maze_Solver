@@ -1,12 +1,20 @@
+from turtle import position
 from settings import *
 from window import *
+from stack import *
 import time
+
+class PositionNode():
+    def __init__(self, x, y):
+        self.position = (x, y)
+        self.direction = 0
 
 class World:
     def __init__(self):
         self.window = Window(WIDTH, HEIGHT)
         self.player = None
         self.end = None
+        self.stack = Stack(100)
     
   
         
@@ -31,9 +39,56 @@ class World:
                 if grid_mark == "S":
                     self.player = (x,y)
                     self.window.DrawPlayer(x + IMAGE_OFFSET,y - IMAGE_OFFSET)
+                    self.stack.push(PositionNode(row, col))
+                    
+    def FindPath(self):
+        v_list = []
+        while not self.stack.isEmpty():
+            currentNode = self.stack.pop()
+            
+            row, col = currentNode.position()
+            d = currentNode.direction
+            currentNode.direcion += 1
+            self.stack.push(currentNode)
+            
+            if MAP[row][colum] == "E":
+                for node in self.stack.stack:
+                    x, y = node.position
+                    map[x][y] = "P"
+                return True
+            if d == 0:
+                if self.getNextCell(row - 1, col) and (row - 1, col) not in v_list:
+                    self.stack.push(PositionNode(row - 1, col))
+                    v_list.append((row, col))
+             
+            if d == 1:
+                if self.getNextCell(row, col - 1) and (row, col - 1) not in v_list:
+                    self.stack.push(PositionNode(row, col - 1))
+                    v_list.append((row, col))
                    
-                    
-                    
+            if d == 2:
+                if self.getNextCell(row + 1, col) and (row + 1, col) not in v_list:
+                    self.stack.push(PositionNode(row + 1, col))
+                    v_list.append((row, col))
+            
+            if d == 2:
+                if self.getNextCell(row, col + 1) and (row, col + 1) not in v_list:
+                    self.stack.push(PositionNode(row, col + 1))
+                    v_list.append((row, col))
+            
+            else:
+                v_list.append((row, col))
+                self.stack.pop()
+             
+        return False
+
+
+    def getNextCell(self, row, col):
+        try:
+            nextCell = MAP[row][col]
+            if nextCell != "#": return True
+        except:
+            print("Error")                    
                 
                 
                 
@@ -41,12 +96,23 @@ class World:
     def RunWorld(self):
         
         self.BuildMaze()
-        
+        if self.FindPath():
+            self.stack.reverse_stack()
+            
         # game loop
         while True:
             self.window.screen.update()
+           
+            if not self.stack.isEmpty():
+                node = self.stack.pop()
+                x,y = node.position
+                
+                y = LEFT + (y * 25)
+                x = TOP - (x * 25)
+                self.window.DrawPlayer(y + 25, x - 25)
+                time.sleep(0.1)
       
-        
+    
 
 world = World()
 world.RunWorld()
