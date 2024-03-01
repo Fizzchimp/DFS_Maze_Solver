@@ -114,7 +114,7 @@ class World:
                 y = LEFT + (y * 25)
                 x = TOP - (x * 25)
                 self.window.DrawPlayer(y + 25, x - 25)
-                time.sleep(0.1)
+                time.sleep(0.05)
       
 
 world = World()
