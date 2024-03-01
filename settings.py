@@ -49,5 +49,3 @@ for line in GRID:
     temp = []
     temp[:] = line
     MAP.append(temp)
-    
-print(MAP)

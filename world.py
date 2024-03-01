@@ -48,35 +48,33 @@ class World:
             
             row, col = currentNode.position
             d = currentNode.direction
-            currentNode.direction += 1
-            
+            currentNode.direction += 1           
             self.stack.push(currentNode)
-            self.stack.display()
-            print(row, col, d, v_list)
             
             if MAP[row][col] == "E":
                 for node in self.stack.stack:
+                    if node == None:
+                        break
                     x, y = node.position
-                    map[x][y] = "P"
+                    MAP[x][y] = "P"
                 return True
             
             if d == 0:
-                print("found", self.getNextCell(row - 1, col))
                 if self.getNextCell(row - 1, col) and (row - 1, col) not in v_list:
                     self.stack.push(PositionNode(row - 1, col))
                     v_list.append((row, col))
              
-            if d == 1:
+            elif d == 1:
                 if self.getNextCell(row, col - 1) and (row, col - 1) not in v_list:
                     self.stack.push(PositionNode(row, col - 1))
                     v_list.append((row, col))
                    
-            if d == 2:
+            elif d == 2:
                 if self.getNextCell(row + 1, col) and (row + 1, col) not in v_list:
                     self.stack.push(PositionNode(row + 1, col))
                     v_list.append((row, col))
             
-            if d == 3:
+            elif d == 3:
                 if self.getNextCell(row, col + 1) and (row, col + 1) not in v_list:
                     self.stack.push(PositionNode(row, col + 1))
                     v_list.append((row, col))
@@ -84,7 +82,7 @@ class World:
             else:
                 v_list.append((row, col))
                 self.stack.pop()
-             
+        self.stack.display() 
         return False
 
 
@@ -103,7 +101,7 @@ class World:
         
         self.BuildMaze()
         if self.FindPath():
-            self.stack.reverse_stack()
+            self.stack.reverse()
             
 
         while True:
