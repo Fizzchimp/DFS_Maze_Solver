@@ -14,7 +14,7 @@ class World:
         self.window = Window(WIDTH, HEIGHT)
         self.player = None
         self.end = None
-        self.stack = Stack(100)
+        self.stack = Stack(300)
     
   
         
