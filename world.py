@@ -61,7 +61,7 @@ class World:
                 return True
             
             if d == 0:
-                print("found", getNextCell(row - 1, col))
+                print("found", self.getNextCell(row - 1, col))
                 if self.getNextCell(row - 1, col) and (row - 1, col) not in v_list:
                     self.stack.push(PositionNode(row - 1, col))
                     v_list.append((row, col))
